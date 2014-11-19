@@ -1,0 +1,26 @@
+name: XFilter
+version: 1.4.1
+main: ${main.class}
+commands:
+  xfilter:
+    description: XFilter commands.
+    permission: xf.*
+    permission-message: You do not have permission to do that.
+    aliases: xf
+
+permissions:
+  xf.*:
+    description: Allows all XFilter commands.
+    children:
+      xf.list: true
+      xf.add: true
+      xf.remove: true
+      xf.setchar: true
+  xf.list:
+    description: Allows the use of /xf list
+  xf.add:
+    description: Allows the use of /xf addWord and /xf addFilter
+  xf.remove:
+    description: Allows the use of /xf removeWord and /xf removeFilter
+  xf.setchar:
+    description: Allows the use of /xf setCharacter
