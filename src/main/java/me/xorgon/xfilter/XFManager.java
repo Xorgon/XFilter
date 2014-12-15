@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * XFilter words management class.
@@ -16,8 +17,8 @@ import java.util.regex.Matcher;
 public class XFManager {
     private final XFilter plugin;
     private List<String> words;
-    private Map<String,Integer> filters;
-    private Map<String,String> regex;
+    private Map<String, Integer> filters;
+    private Map<Pattern, String> regex;
     private YamlConfiguration config;
     private String character;
     File file;
@@ -31,12 +32,12 @@ public class XFManager {
         config = YamlConfiguration.loadConfiguration(file);
     }
 
-    public void loadWords(){
+    public void loadWords() {
         for (String word : words) {
             String[] split = word.split("");
             String wordRegex = "";
             for (String s : split) {
-                if (!(s.equals(""))){
+                if (!(s.equals(""))) {
                     wordRegex = wordRegex.concat(s).concat("+");
                 }
             }
@@ -44,17 +45,19 @@ public class XFManager {
             for (int n = 1; n <= word.length(); n++) {
                 replacement = replacement.concat(character);
             }
-            regex.put(wordRegex, replacement);
+            Pattern wordPattern = Pattern.compile(wordRegex, Pattern.CASE_INSENSITIVE);
+            regex.put(wordPattern, replacement);
         }
     }
 
-    public void loadFilters(){
-        for (String filter : filters.keySet()){
+    public void loadFilters() {
+        for (String filter : filters.keySet()) {
             String replacement = "";
             for (int n = 1; n <= filters.get(filter); n++) {
                 replacement = replacement.concat(character);
             }
-            regex.put(filter, replacement);
+            Pattern pattern = Pattern.compile(filter, Pattern.CASE_INSENSITIVE);
+            regex.put(pattern, replacement);
         }
     }
 
@@ -73,8 +76,8 @@ public class XFManager {
         this.words = filter;
     }
 
-    public void addWord(String word){
-        if (!words.contains(word)){
+    public void addWord(String word) {
+        if (!words.contains(word)) {
             words.add(word);
             regex = new HashMap<>();
             loadWords();
@@ -82,8 +85,8 @@ public class XFManager {
         }
     }
 
-    public boolean removeWord(String word){
-        if (words.contains(word)){
+    public boolean removeWord(String word) {
+        if (words.contains(word)) {
             words.remove(word);
             regex = new HashMap<>();
             loadWords();
@@ -94,8 +97,8 @@ public class XFManager {
         }
     }
 
-    public void addFilter(String filter, Integer integer){
-        if (!filters.containsKey(filter)){
+    public void addFilter(String filter, Integer integer) {
+        if (!filters.containsKey(filter)) {
             filters.put(filter, integer);
             regex = new HashMap<>();
             loadWords();
@@ -103,8 +106,8 @@ public class XFManager {
         }
     }
 
-    public boolean removeFilter(String filter){
-        if (filters.containsKey(filter)){
+    public boolean removeFilter(String filter) {
+        if (filters.containsKey(filter)) {
             filters.remove(filter);
             regex = new HashMap<>();
             loadWords();
@@ -123,22 +126,34 @@ public class XFManager {
         return filters;
     }
 
-    public Map<String, String> getRegex() {
+    public Map<Pattern, String> getRegex() {
         return regex;
     }
 
-    public void load(){
-        character = config.getString("character");
-        words = config.getStringList("words");
+    public void load() {
+        if (config.getString("character") != null) {
+            character = config.getString("character");
+        } else {
+            character = "*";
+        }
+        if (config.getStringList("words") != null) {
+            words = config.getStringList("words");
+        } else {
+            words = new ArrayList<>();
+        }
         loadWords();
-        Map<String, Object> tempFilters = config.getConfigurationSection("filters").getValues(false);
-        for (String s : tempFilters.keySet()) {
-            filters.put(s,(Integer)tempFilters.get(s));
+        if(config.getConfigurationSection("filters") != null) {
+            Map<String, Object> tempFilters = config.getConfigurationSection("filters").getValues(false);
+            for (String s : tempFilters.keySet()) {
+                filters.put(s, (Integer) tempFilters.get(s));
+            }
+        } else {
+            filters = new HashMap<>();
         }
         loadFilters();
     }
 
-    public void save(){
+    public void save() {
         config = new YamlConfiguration();
         config.set("character", character);
         config.set("words", words);
