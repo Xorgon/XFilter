@@ -21,6 +21,7 @@ public class XFManager {
     private Map<Pattern, String> regex;
     private YamlConfiguration config;
     private String character;
+    private Boolean collectStats;
     File file;
 
     public XFManager(XFilter plugin) {
@@ -131,6 +132,12 @@ public class XFManager {
     }
 
     public void load() {
+        if (config.get("collectStats") == null) {
+            config.set("collectStats", true);
+            collectStats = true;
+        } else {
+            collectStats = config.getBoolean("collectStats");
+        }
         if (config.getString("character") != null) {
             character = config.getString("character");
         } else {
@@ -157,11 +164,16 @@ public class XFManager {
         config = new YamlConfiguration();
         config.set("character", character);
         config.set("words", words);
+        config.set("collectStats", collectStats);
         config.createSection("filters", filters);
         try {
             config.save(file);
         } catch (IOException exception) {
             exception.printStackTrace();
         }
+    }
+
+    public Boolean getCollectStats() {
+        return collectStats;
     }
 }

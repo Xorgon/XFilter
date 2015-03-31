@@ -3,6 +3,9 @@ package me.xorgon.xfilter;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.mcstats.MetricsLite;
+
+import java.io.IOException;
 
 /**
  * XFilter main class.
@@ -22,6 +25,17 @@ public class XFilter extends JavaPlugin {
         manager.load();
         Bukkit.getPluginManager().registerEvents(new XFListeners(this), this);
         getCommand("xfilter").setExecutor(new XFCommand());
+
+        if (manager.getCollectStats()) {
+            Bukkit.broadcastMessage("Attempting to load MCStats.");
+            try {
+                MetricsLite metrics = new MetricsLite(this);
+                metrics.start();
+            } catch (IOException e) {
+                // Failed to submit the stats :-(
+                Bukkit.broadcastMessage("Failed to load MCStats.");
+            }
+        }
     }
 
     public void onDisable() {

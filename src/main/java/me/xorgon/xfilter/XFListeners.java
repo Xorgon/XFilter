@@ -28,8 +28,9 @@ public class XFListeners implements Listener {
         String message = event.getMessage();
         Map<Pattern, String> regexList = manager.getRegex();
         for (Pattern regex : regexList.keySet()) {
-            event.setMessage(regex.matcher(message).replaceAll(regexList.get(regex)));
+            message = regex.matcher(message).replaceAll(regexList.get(regex));
         }
+        event.setMessage(message);
     }
 }
 
