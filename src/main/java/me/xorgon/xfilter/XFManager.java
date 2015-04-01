@@ -22,6 +22,7 @@ public class XFManager {
     private YamlConfiguration config;
     private String character;
     private Boolean collectStats;
+    private Boolean autoUpdate;
     File file;
 
     public XFManager(XFilter plugin) {
@@ -138,6 +139,12 @@ public class XFManager {
         } else {
             collectStats = config.getBoolean("collectStats");
         }
+        if (config.get("autoUpdate") == null) {
+            config.set("autoUpdate", true);
+            autoUpdate = true;
+        } else {
+            autoUpdate = config.getBoolean("autoUpdate");
+        }
         if (config.getString("character") != null) {
             character = config.getString("character");
         } else {
@@ -175,5 +182,9 @@ public class XFManager {
 
     public Boolean getCollectStats() {
         return collectStats;
+    }
+
+    public Boolean getAutoUpdate() {
+        return autoUpdate;
     }
 }

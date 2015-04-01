@@ -2,6 +2,7 @@ package me.xorgon.xfilter;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.mcstats.MetricsLite;
 
@@ -26,14 +27,17 @@ public class XFilter extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new XFListeners(this), this);
         getCommand("xfilter").setExecutor(new XFCommand());
 
+        if (manager.getAutoUpdate()) {
+            Updater updater = new Updater(this, 85257, this.getFile(), Updater.UpdateType.NO_VERSION_CHECK, false);
+        }
+
         if (manager.getCollectStats()) {
-            Bukkit.broadcastMessage("Attempting to load MCStats.");
             try {
                 MetricsLite metrics = new MetricsLite(this);
                 metrics.start();
             } catch (IOException e) {
                 // Failed to submit the stats :-(
-                Bukkit.broadcastMessage("Failed to load MCStats.");
+                System.out.println("MetricsLite has failed to submit stats.");
             }
         }
     }
