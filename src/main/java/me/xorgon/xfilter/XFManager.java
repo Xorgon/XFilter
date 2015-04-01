@@ -169,9 +169,13 @@ public class XFManager {
 
     public void save() {
         config = new YamlConfiguration();
-        config.set("character", character);
-        config.set("words", words);
         config.set("collectStats", collectStats);
+        config.set("autoUpdate", autoUpdate);
+
+        config.set("character", character);
+
+        config.set("words", words);
+
         config.createSection("filters", filters);
         try {
             config.save(file);

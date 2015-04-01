@@ -28,7 +28,7 @@ public class XFilter extends JavaPlugin {
         getCommand("xfilter").setExecutor(new XFCommand());
 
         if (manager.getAutoUpdate()) {
-            Updater updater = new Updater(this, 85257, this.getFile(), Updater.UpdateType.NO_VERSION_CHECK, false);
+            Updater updater = new Updater(this, 85257, this.getFile(), Updater.UpdateType.DEFAULT, false);
         }
 
         if (manager.getCollectStats()) {

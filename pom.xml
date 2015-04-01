@@ -6,7 +6,7 @@
 
     <groupId>me.xorgon</groupId>
     <artifactId>xfilter</artifactId>
-    <version>1.4.4</version>
+    <version>1.4.5</version>
     <name>XFilter</name>
 
     <properties>
