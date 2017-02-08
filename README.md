@@ -11,7 +11,9 @@ Extensions:
 
 # Examples
 /xfilter addword farts - *Adds the word "farts" to the filter, "farts" would then be replaced by 5 of the replacement character you have set, by default this would be 5 '\*' symbols.*
+
 /xfilter removeword farts - *Removes the word "farts" from the filter.*
+
 /xfilter setCharacter o - *Sets the character replacement as "o", so farts would be filtered to "ooooo".*
 
 # Permissions:
