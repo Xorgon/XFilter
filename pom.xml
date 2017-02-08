@@ -6,37 +6,38 @@
 
     <groupId>me.xorgon</groupId>
     <artifactId>xfilter</artifactId>
-    <version>1.4.5</version>
+    <version>1.4.7</version>
     <name>XFilter</name>
 
     <properties>
         <package>me.xorgon.xfilter</package>
         <main.class>${package}.XFilter</main.class>
-        <bukkit.version>1.7.9-R0.1-SNAPSHOT</bukkit.version>
+
+        <commons-bukkit.version>0.3.6-SNAPSHOT</commons-bukkit.version>
+        <spigot-api.version>1.10.2-R0.1-SNAPSHOT</spigot-api.version>
     </properties>
 
     <dependencies>
+        <!--Spigot API-->
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
+            <version>${spigot-api.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <!--Bukkit API-->
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>${bukkit.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.mcstats.bukkit</groupId>
-            <artifactId>metrics-lite</artifactId>
-            <version>R7</version>
-            <scope>compile</scope>
+            <version>${spigot-api.version}</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
     <repositories>
         <repository>
-            <id>bukkit-repo</id>
-            <url>http://repo.bukkit.org/content/groups/public/</url>
-        </repository>
-        <repository>
-            <id>Plugin Metrics</id>
-            <url>http://repo.mcstats.org/content/repositories/public</url>
+            <id>spigot-repo</id>
+            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
     </repositories>
 

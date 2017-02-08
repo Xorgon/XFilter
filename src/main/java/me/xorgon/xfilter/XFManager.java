@@ -21,7 +21,6 @@ public class XFManager {
     private Map<Pattern, String> regex;
     private YamlConfiguration config;
     private String character;
-    private Boolean collectStats;
     private Boolean autoUpdate;
     File file;
 
@@ -133,12 +132,6 @@ public class XFManager {
     }
 
     public void load() {
-        if (config.get("collectStats") == null) {
-            config.set("collectStats", true);
-            collectStats = true;
-        } else {
-            collectStats = config.getBoolean("collectStats");
-        }
         if (config.get("autoUpdate") == null) {
             config.set("autoUpdate", true);
             autoUpdate = true;
@@ -169,7 +162,6 @@ public class XFManager {
 
     public void save() {
         config = new YamlConfiguration();
-        config.set("collectStats", collectStats);
         config.set("autoUpdate", autoUpdate);
 
         config.set("character", character);
@@ -182,10 +174,6 @@ public class XFManager {
         } catch (IOException exception) {
             exception.printStackTrace();
         }
-    }
-
-    public Boolean getCollectStats() {
-        return collectStats;
     }
 
     public Boolean getAutoUpdate() {

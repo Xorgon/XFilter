@@ -1,5 +1,5 @@
 name: XFilter
-version: 1.4.5
+version: ${version}
 main: ${main.class}
 commands:
   xfilter:
