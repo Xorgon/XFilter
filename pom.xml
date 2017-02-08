@@ -12,7 +12,7 @@
     <properties>
         <package>me.xorgon.xfilter</package>
         <main.class>${package}.XFilter</main.class>
-        <bukkit.version>1.10.2-R0.1-SNAPSHOT</bukkit.version>
+        <bukkit.version>1.7.9-R0.1-SNAPSHOT</bukkit.version>
     </properties>
 
     <dependencies>
