@@ -26,6 +26,7 @@ public class XFListeners implements Listener {
     @EventHandler
     public void onPlayerChat(AsyncPlayerChatEvent event) {
         String message = event.getMessage();
+        // TODO: Sort by length
         Map<Pattern, String> regexList = manager.getRegex();
         for (Pattern regex : regexList.keySet()) {
             message = regex.matcher(message).replaceAll(regexList.get(regex));

@@ -6,7 +6,7 @@
 
     <groupId>me.xorgon</groupId>
     <artifactId>xfilter</artifactId>
-    <version>1.4.7</version>
+    <version>1.4.8</version>
     <name>XFilter</name>
 
     <properties>
@@ -14,7 +14,7 @@
         <main.class>${package}.XFilter</main.class>
 
         <commons-bukkit.version>0.3.6-SNAPSHOT</commons-bukkit.version>
-        <spigot-api.version>1.10.2-R0.1-SNAPSHOT</spigot-api.version>
+        <spigot-api.version>1.12-R0.1-SNAPSHOT</spigot-api.version>
     </properties>
 
     <dependencies>
