@@ -1,5 +1,6 @@
 package me.xorgon.xfilter;
 
+import javafx.collections.transformation.SortedList;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
@@ -19,10 +20,11 @@ public class XFManager {
     private List<String> words;
     private Map<String, Integer> filters;
     private Map<Pattern, String> regex;
+    private List<Pattern> sortedPatterns;
     private YamlConfiguration config;
     private String character;
     private Boolean autoUpdate;
-    File file;
+    private File file;
 
     public XFManager(XFilter plugin) {
         this.plugin = plugin;
@@ -149,7 +151,7 @@ public class XFManager {
             words = new ArrayList<>();
         }
         loadWords();
-        if(config.getConfigurationSection("filters") != null) {
+        if (config.getConfigurationSection("filters") != null) {
             Map<String, Object> tempFilters = config.getConfigurationSection("filters").getValues(false);
             for (String s : tempFilters.keySet()) {
                 filters.put(s, (Integer) tempFilters.get(s));

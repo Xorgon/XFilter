@@ -5,10 +5,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.Inventory;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * XFilter listener class.
@@ -26,9 +27,10 @@ public class XFListeners implements Listener {
     @EventHandler
     public void onPlayerChat(AsyncPlayerChatEvent event) {
         String message = event.getMessage();
-        // TODO: Sort by length
         Map<Pattern, String> regexList = manager.getRegex();
-        for (Pattern regex : regexList.keySet()) {
+        // TODO: Optimize this.
+        List<Pattern> sorted = regexList.keySet().stream().sorted(Comparator.comparingInt(o -> -o.pattern().length())).collect(Collectors.toList());
+        for (Pattern regex : sorted) {
             message = regex.matcher(message).replaceAll(regexList.get(regex));
         }
         event.setMessage(message);
